@@ -52,7 +52,6 @@ class FileStorage:
     def delete(self, obj=None):
         """Delete the objects"""
         try:
-            key = obj.__class__.__name__ + '.' + str(obj.id)
-            del self.__objects[key]
+            del self.__objects["{}.{}".format(type(obj).__name__,obj.id)]
         except (AttributeError, KeyError):
             pass
