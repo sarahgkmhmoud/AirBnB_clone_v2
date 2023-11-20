@@ -23,12 +23,12 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
         cls_dict = {}
         if cls:
-            if type(cls) is str:
+            if type(cls) == str:
                 cls = eval(cls)
-                for k,v in self.__objects.items():
-                    if type(v) == cls:
-                        cls_dict[k] = v
-                return cls_dict
+            for k,v in self.__objects.items():
+                if type(v) == cls:
+                    cls_dict[k] = v
+            return cls_dict
         return self.__objects
 
     def new(self, obj):
@@ -62,7 +62,3 @@ class FileStorage:
             del self.__objects["{}.{}".format(type(obj).__name__,obj.id)]
         except (AttributeError, KeyError):
             pass
-
-    def close(self):
-        """Call the reload method."""
-        self.reload()
