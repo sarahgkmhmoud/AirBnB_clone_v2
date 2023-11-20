@@ -9,4 +9,3 @@ class City(BaseModel, Base):
     __tablename__ = "cities"
     name = Column(String(128), nullable=False)
     state_id = column(String(60), nullable=False, ForeignKey="State.id")
-
