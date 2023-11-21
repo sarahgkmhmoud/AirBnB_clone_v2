@@ -27,6 +27,9 @@ class BaseModel(Base):
             kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
             del kwargs['__class__']
+            for k, v in kwargs.items():
+                if not hasattr(self, k):
+                    setattr(self, k, v)
             self.__dict__.update(kwargs)
 
     def __str__(self):
