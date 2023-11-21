@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.review import Review
 from sqlalchemy.orm import relationship
 from os import getenv
 import models
 
 
-class Place(BaseModel):
+class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
     if getenv("HBNB_TYPE_STORAGE") == "db":
