@@ -120,6 +120,7 @@ class HBNBCommand(cmd.Cmd):
 
             if (cmd_args[0] not in HBNBCommand.classes):
                 print("** class doesn't exist **")
+                return
 
             else:
                 parms_dict = {}
@@ -137,8 +138,10 @@ class HBNBCommand(cmd.Cmd):
             else:
                 my_obj = cls_name()
             print(my_obj.id)
+            my_obj.save()
         else:
             print("** class name missing **")
+            return
 
     def help_create(self):
         """ Help information for the create method """
