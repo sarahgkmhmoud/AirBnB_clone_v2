@@ -33,20 +33,19 @@ class DBStorage:
             Base.metadata.drop.all(self.__engine)
     def all(self, cls=None):
         cls_dict = {}
-        if cls:
-            if type(cls) == str:
-                cls = eval(cls)
-            cls_list = self.__session.query(cls)
-        else:
+        if cls is None:
             cls_list = self.__session.query(State).all()
             cls_list.extend(self.__session.query(City).all())
             cls_list.extend(self.__session.query(User).all())
             cls_list.extend(self.__session.query(Place).all())
             cls_list.extend(self.__session.query(Review).all())
             cls_list.extend(self.__session.query(Amenity).all())
-
+        else:
+            if type(cls) == str:
+                cls = eval(cls)
+            cls_list = self.__session.query(cls)
         for instance in cls_list:
-            key = f"{instance.__class__.__name__}.{instance.id}"
+            key = f"{type(instance).__name__}.{instance.id}"
             cls_dict [key] = instance 
         return cls_dict
 
@@ -67,6 +66,7 @@ class DBStorage:
         session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
+
     def close(self):
         """Close the working SQLAlchemy session."""
         self.__session.close()
