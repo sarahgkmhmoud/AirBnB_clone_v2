@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """data base storage"""
 
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.user import User
 from models.city import City
 from models.amenity import Amenity

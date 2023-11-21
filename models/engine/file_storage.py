@@ -19,8 +19,11 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """Adds new object to storage dictionary"""
-        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+        """Sets in __objects the obj with key <obj class name>.id"""
+        class_name = obj.__class__.__name__
+        id = obj.id
+        key = f"{class_name}.{id}"
+        self.__objects[key] = obj
 
     def save(self):
         """Saves storage dictionary to file"""
