@@ -34,9 +34,17 @@ class DBStorage:
     def all(self, cls=None):
         cls_dict = {}
         if cls:
+            if type(cls) == str:
+                cls = eval(cls)
             cls_list = self.__session.query(cls)
         else:
-            cls_list = self.__session.query()
+            cls_list = self.__session.query(State).all()
+            cls_list.extend(self.__session.query(City).all())
+            cls_list.extend(self.__session.query(User).all())
+            cls_list.extend(self.__session.query(Place).all())
+            cls_list.extend(self.__session.query(Review).all())
+            cls_list.extend(self.__session.query(Amenity).all())
+
         for instance in cls_list:
             key = f"{instance.__class__.__name__}.{instance.id}"
             cls_dict [key] = instance 
