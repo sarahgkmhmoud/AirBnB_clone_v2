@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """data base storage"""
 
-from models.base_model import BaseModel, Base
+from models.base_model import BaseModel
+from models.base_model import Base
 from models.user import User
 from models.city import City
 from models.amenity import Amenity
@@ -28,9 +29,8 @@ class DBStorage:
     __session = None
     def __init__(self):
         self.__engine = create_engine(db_url, pool_pre_ping=True)
-        metadata = MetaData(bind=self.__engine)
         if getenv("HBNB_ENV") == 'test':
-            metadata.drop.all()
+            Base.metadata.drop.all(self.__engine)
     def all(self, cls=None):
         cls_dict = {}
         if cls:
@@ -58,5 +58,5 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_factory)
-        self_session = Session()
+        self.__session = Session()
 
