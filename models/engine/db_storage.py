@@ -33,7 +33,7 @@ class DBStorage:
         else:
             cls_list = self.__session.query()
         for instance in cls_list:
-            key = f"{instance.__classs__.__name__}.{instance.id}"
+            key = f"{instance.__class__.__name__}.{instance.id}"
             cls_dict [key] = instance 
         return cls_dict
 
@@ -43,6 +43,6 @@ class DBStorage:
     def save(self):
         self.__session.commit()
 
-    
+
 
     
