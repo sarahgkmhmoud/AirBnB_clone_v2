@@ -14,7 +14,9 @@ from sqlalchemy import String
 from sqlalchemy import Table
 from sqlalchemy.orm import relationship
 
-
+Associal_table = Table("place_amenity", Base.metadata, 
+                       Column("place_id", String(60), ForeignKey("places.id"), Primary_key=True, nullable=False),
+                       Column("amenity_id", String(60), ForeignKey("amenities.id"), Primary_key=True, nullable=False))
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -31,8 +33,10 @@ class Place(BaseModel, Base):
         latitude = Column(Float)
         longitude = Column(Float)
         reviews = relationship ('Review', backref="place", cascade="delete")
+        amenities = relationship('Amenity', secondary="place_amenity", viewonly=False)
 
     elif getenv("HBNB_TYPE_STORAGE") != "db": 
+
         @property
         def reviews(self):
             reviews_list = []
@@ -40,3 +44,19 @@ class Place(BaseModel, Base):
                 if review.place_id == self.id:
                     reviews_list.append(Review)
             return reviews_list
+
+        @property
+        def amenities(self):
+            amenities_list = []
+            for amenity in list(models.storage.all(Amenity).values()):
+                if amenity.place_id == self.id:
+                    amenities_list.append(Amenity)
+            return  amenities_list
+
+        @amenities.setter
+        def amenities(self, value):
+            if type(value) == Amenity:
+                    self.amenity_ids.append(value.id)
+
+            
+        
