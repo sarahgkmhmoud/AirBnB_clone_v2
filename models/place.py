@@ -15,8 +15,8 @@ from sqlalchemy import Table
 from sqlalchemy.orm import relationship
 
 Associal_table = Table("place_amenity", Base.metadata, 
-                       Column("place_id", String(60), ForeignKey("places.id"), Primary_key=True, nullable=False),
-                       Column("amenity_id", String(60), ForeignKey("amenities.id"), Primary_key=True, nullable=False))
+                       Column("place_id", String(60), ForeignKey("places.id"), primary_key=True, nullable=False),
+                       Column("amenity_id", String(60), ForeignKey("amenities.id"), primary_key=True, nullable=False))
 
 class Place(BaseModel, Base):
     """ A place to stay """
