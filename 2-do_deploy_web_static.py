@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 """Write a Fabric script that generates a .tgz archive"""
 from fabric import Connection
-from fabric import run
+from fabric.api import run, env, put
+env.hosts = ['54.86.220.157', '100.26.212.86']
+ 
 
 
 def do_deploy(archive_path):
