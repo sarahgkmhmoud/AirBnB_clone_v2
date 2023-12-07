@@ -20,7 +20,7 @@ def do_deploy(archive_path):
         run(f'mv {remote_path}{match_path}/web_static/* {remote_path}{match_path}/')
         run(f'rm -rf {remote_path}{match_path}/web_static/*')
         run (f'rm -rf /data/web_static/current')
-        run (f'sudo ln -sf {remote_path}{match_path}/ /data/web_static/current')
+        run (f'sudo ln -sf {remote_path}/ /data/web_static/current')
         return True
     except:
         return False
