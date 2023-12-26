@@ -19,6 +19,7 @@ def hbnb():
 def show_C(text):
     return f"C {text.replace('_',' ')}"
 
+
 @app.route('/python', strict_slashes=False)
 @app.route("/python/<text>", strict_slashes=False)
 def show_python(text='is_cool'):
