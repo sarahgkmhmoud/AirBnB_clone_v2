@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
+
+
 class FileStorage:
     """This class manages storage of hbnb models in JSON format"""
     __file_path = 'file.json'
@@ -10,10 +12,10 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
         cls_dict = {}
         if cls:
-            if type(cls) == str:
+            if type(cls) is str:
                 cls = eval(cls)
-            for k,v in self.__objects.items():
-                if type(v) == cls:
+            for k, v in self.__objects.items():
+                if type(v) is cls:
                     cls_dict[k] = v
             return cls_dict
         return self.__objects
@@ -44,20 +46,20 @@ class FileStorage:
 
         classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
                    'State': State, 'City': City, 'Amenity': Amenity,
-                   'Review': Review}  
+                   'Review': Review}
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
         """Delete the objects"""
         try:
-            del self.__objects["{}.{}".format(type(obj).__name__,obj.id)]
+            del self.__objects["{}.{}".format(type(obj).__name__, obj.id)]
         except (AttributeError, KeyError):
             pass
 
